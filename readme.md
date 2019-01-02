@@ -5,6 +5,7 @@ This is the Arduino code for a DFRobot Beetle BLE Bluno microcontroller as a HID
 # Electronic schema #
 
 This is very simple:
+
 ![Schema](pedalTurnPageSchema.JPG)
 
 # Photos of the Prototype
