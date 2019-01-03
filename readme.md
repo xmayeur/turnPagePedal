@@ -14,10 +14,9 @@ This is very simple:
 
 ![Photo 2](details.jpg)
 
-# To do #
+# Functional behaviour #
 
-Implement enhanced functionality using the left & right button
-* Actions *
+The following functionality is implemented when using the left & right buttons:
 
 - Left button (red button) short press sends a left cursor keystroke when released
 - right button (blue button) short press sends a right cursor keystroke when released
