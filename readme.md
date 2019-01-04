@@ -6,15 +6,17 @@ This is the Arduino code for a DFRobot Beetle BLE Bluno microcontroller as a HID
 
 This is very simple:
 
-![Schema](pedalTurnPageSchema.JPG)
+![Schema](img/pedalTurnPageSchema.JPG)
 
 # Photos of the Prototype
 
-![Photo 1](overall.jpg)
+![Photo 1](img/overall.jpg)
 
-![Photo 2](details.jpg)
+![Photo 2](img/details.jpg)
 
 # Functional behaviour #
+
+**Normal mode**
 
 The following functionality is implemented when using the left & right buttons:
 
@@ -24,10 +26,18 @@ The following functionality is implemented when using the left & right buttons:
 
 - if you maintain the right button pressed while pressing the left one, it changes the longpress period from 500ms to 1s
 
-- if you maintain the left button pressed while pressing three times the right one, it enter the admin mode.
--- then pressing the left button set the Beetle BLE device in Central role and transparent mode
--- or pressing the right button set the device in Peripheral and HID mode
+**Admin mode**
 
-The following table resumes the actions taken according to buttons' state changes:
+Maintain the left button pressed while pressing three times the right one to enter the admin mode:
 
-![TransitionMap](DF105A59-EE0D-40F4-A7FF-02DA76612F62.jpeg)
+- press the left button set the Beetle BLE device in Central role and transparent mode
+- or press the right button set the device in Peripheral and HID mode
+
+**Button state transition table**
+
+The following table resumes the actions taken according to buttons' state changes.
+
+Rows indicates the 'FROM' state; columns the 'TO' state.
+States are represented by a two letters code indicating the respective **H**igh or **L**ow state of the left and right buttons. So '**HL**' means that the left button is being pressed, while the right button not.
+
+![TransitionMap](img/transitionMap.jpg)
