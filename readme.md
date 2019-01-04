@@ -1,4 +1,4 @@
-## pedalPageTurn ##
+## turnPagePedal ##
 
 turnPagePedal is a project to create a two-buttons pedal device that enables page turns for a score displaying application on a tablet.
 
