@@ -44,6 +44,6 @@ Maintain the left button pressed while pressing three times the right one to ent
 The following table resumes the actions taken according to buttons' state changes.
 
 Rows indicates the 'FROM' state; columns the 'TO' state.
-States are represented by a two letters code indicating the respective **H**igh or **L**ow state of the left and right buttons. So '**HL**' means that the left button is being pressed, while the right button not.
+States are represented by a two letters code indicating the respective **H**igh or **L**ow state of the left and right buttons. So '**LH**' means that the left button is being pressed, while the right button not.
 
 ![TransitionMap](img/transitionMap.jpg)
