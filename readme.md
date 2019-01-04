@@ -1,6 +1,12 @@
 ## pedalPageTurn ##
 
-This is the Arduino code for a DFRobot Beetle BLE Bluno microcontroller as a HID keyboard sending left and right cursor code when buttons are pushed
+turnPagePedal is a project to create a two-buttons pedal device that enables page turns for a score displaying application on a tablet.
+
+It emulates a keyboard to basically send the cursor left/right commands. Additional commands may be sent by programming long press on one of the pedal button to actionate da-capo or cross page jumps command.
+
+Special combinations of putton presses allow entering in admin mode and configuring some behaviour or parameters of the device.
+
+This repo also contains the Arduino code for a DFRobot Beetle BLE Bluno microcontroller as a HID keyboard sending left and right cursor code when buttons are pushed
 
 # Electronic schema #
 
