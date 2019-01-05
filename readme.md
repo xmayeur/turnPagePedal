@@ -28,9 +28,9 @@ The following functionality is implemented when using the left & right buttons:
 
 - Left button (red button) short press sends a left cursor keystroke when released
 - right button (blue button) short press sends a right cursor keystroke when released
-- right button long press send a "c" character when release
+- left button long press send a "c" character when released 
 
-- if you maintain the right button pressed while pressing the left one, it changes the longpress period from 500ms to 1s
+- if you maintain the right button pressed while pressing the left one n times, it changes the longpress period from 500ms to ntimes * 500 ms (max 3000 ms)
 
 **Admin mode**
 
