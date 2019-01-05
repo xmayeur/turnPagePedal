@@ -20,6 +20,7 @@ This is very simple:
 
 ![Photo 2](img/details.jpg)
 
+
 # Functional behaviour #
 
 **Normal mode**
@@ -46,4 +47,49 @@ The following table resumes the actions taken according to buttons' state change
 Rows indicates the 'FROM' state; columns the 'TO' state.
 States are represented by a two letters code indicating the respective **H**igh or **L**ow state of the left and right buttons. So '**LH**' means that the left button is being pressed, while the right button not.
 
-![TransitionMap](img/transitionMap.jpg)
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg .tg-kiyi{font-weight:bold;border-color:inherit;text-align:left}
+.tg .tg-xldj{border-color:inherit;text-align:left}
+.tg .tg-fymr{font-weight:bold;border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+  <tr>
+    <th class="tg-kiyi">            TO<br>&nbsp;&nbsp;&nbsp;&nbsp;FROM</th>
+    <th class="tg-kiyi">HH</th>
+    <th class="tg-kiyi">HL</th>
+    <th class="tg-kiyi">LH</th>
+    <th class="tg-kiyi">LL</th>
+  </tr>
+  <tr>
+    <td class="tg-kiyi">HH</td>
+    <td class="tg-xldj"> </td>
+    <td class="tg-xldj">start<br>&nbsp;&nbsp;rtimer<br>&nbsp;&nbsp;&nbsp;&nbsp;if admin mode: <br>&nbsp;&nbsp;&nbsp;&nbsp;    set HID mode , restart device</td>
+    <td class="tg-xldj">start<br>&nbsp;&nbsp;ltimer<br>&nbsp;&nbsp;&nbsp;&nbsp;if admin mode: <br>&nbsp;&nbsp;&nbsp;&nbsp;    set TRANSPARENT mode; restart<br>&nbsp;&nbsp;device</td>
+    <td class="tg-xldj"> </td>
+  </tr>
+  <tr>
+    <td class="tg-kiyi">HL</td>
+    <td class="tg-xldj">stop<br>&nbsp;&nbsp;rtimer<br>&nbsp;&nbsp;&nbsp;&nbsp;if admin mode:<br>&nbsp;&nbsp;&nbsp;&nbsp;    admin mode = false<br>&nbsp;&nbsp;&nbsp;&nbsp;else:<br>&nbsp;&nbsp;&nbsp;&nbsp;    if rtimer &lt; period: send RIGHT<br>&nbsp;&nbsp;ARROW<br>&nbsp;&nbsp;&nbsp;&nbsp;   </td>
+    <td class="tg-xldj"> </td>
+    <td class="tg-xldj"> </td>
+    <td class="tg-xldj">increase<br>&nbsp;&nbsp;lcounter<br>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="tg-kiyi">LH</td>
+    <td class="tg-xldj">stop<br>&nbsp;&nbsp;ltimer<br>&nbsp;&nbsp;&nbsp;&nbsp;if admin mode:<br>&nbsp;&nbsp;&nbsp;&nbsp;      admin mode = false<br>&nbsp;&nbsp;&nbsp;&nbsp;else:<br>&nbsp;&nbsp;&nbsp;&nbsp;    if rtimer &lt; period: send LEFT<br>&nbsp;&nbsp;ARROW<br>&nbsp;&nbsp;&nbsp;&nbsp;    if rtimer &gt; period:  send 'C' char</td>
+    <td class="tg-xldj"> </td>
+    <td class="tg-xldj"> </td>
+    <td class="tg-xldj">increase<br>&nbsp;&nbsp;rcounter<br>&nbsp;&nbsp;&nbsp;&nbsp;if rcounter &gt; 3: <br>&nbsp;&nbsp;&nbsp;&nbsp;     admin mode = true</td>
+  </tr>
+  <tr>
+    <td class="tg-fymr">LL</td>
+    <td class="tg-0pky">if lcounter &gt;<br>&nbsp;&nbsp;0:      <br>&nbsp;&nbsp;&nbsp;&nbsp;     period = lcounter * 500ms<br>&nbsp;&nbsp;&nbsp;&nbsp;reset rcounter, lcounter</td>
+    <td class="tg-0pky"> </td>
+    <td class="tg-0pky"> </td>
+    <td class="tg-0pky"> </td>
+  </tr>
+</table>
