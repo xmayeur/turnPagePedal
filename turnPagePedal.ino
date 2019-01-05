@@ -74,7 +74,7 @@ void loop() {
         Serial.print("AT+FSM=FSM_HID_USB_COM_BLE_AT") + Serial.println(); delay(100);
         blinkLED(250, 4);
         HIDmode = true;
-        Serial.print("AT+RESTART") + Serial.println(); delay(100);
+        Serial.print("AT+RESTART") + Serial.println(); 
 
       }
     }
@@ -83,14 +83,14 @@ void loop() {
     {
       startLeft = millis();
       digitalWrite(LED, HIGH);
+      
       if (adminMode)
       {
         Serial.print("AT+ROLE=ROLE_CENTRAL") + Serial.println(); delay(100);
         Serial.print("AT+FSM=FSM_TRANS_USB_COM_BLE") + Serial.println(); delay(100);
         blinkLED(500, 2);
         HIDmode = false;
-        Serial.print("AT+RESTART") + Serial.println(); delay(100);
-
+        Serial.print("AT+RESTART") + Serial.println();
       }
     }
 
@@ -105,7 +105,7 @@ void loop() {
       {
         duration = lcounter * durationStep;
         EEPROM.write(0, lcounter);
-        Serial.print(">Duration=" + String(duration)) + Serial.println(); delay(100);
+        // Serial.print(">Duration=" + String(duration)) + Serial.println(); delay(100);
         lcounter = 0;
       }
       /*
@@ -117,7 +117,7 @@ void loop() {
       else // right button short press - send a right cursor code
       {
         digitalWrite(LED, LOW);
-        BLE.press_key(HID_KEYBOARD_RIGHT_ARROW); delay(100); // short press sends a right cursor code
+        BLE.press_key(HID_KEYBOARD_RIGHT_ARROW); delay(20); // short press sends a right cursor code
         BLE.press_key(HID_KEYBOARD_RESERVED); delay(10);
       }
     }
@@ -135,13 +135,13 @@ void loop() {
         rcounter = 0;
       } else if (endLeft - startLeft > duration) // long press > duration ms - send the 'c' character
       {
-        BLE.press_key(HID_KEYBOARD_C); delay(100);
+        BLE.press_key(HID_KEYBOARD_C); delay(20);
         BLE.press_key(HID_KEYBOARD_RESERVED); delay(10);
 
       } else // left button short press - send a left cursor code
       {
         digitalWrite(LED, LOW);
-        BLE.press_key(HID_KEYBOARD_LEFT_ARROW); delay(100); // short press sends a left cursor code
+        BLE.press_key(HID_KEYBOARD_LEFT_ARROW); delay(20); // short press sends a left cursor code
         BLE.press_key(HID_KEYBOARD_RESERVED); delay(10);
       }
     }
@@ -160,7 +160,7 @@ void loop() {
 
     // memorize previous state
     prevState = state;
-    delay(100);
+    delay(20);
   } // end of while(1)
 }
 
