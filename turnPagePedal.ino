@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include <DFBLE.h>
+#include <EEPROM.h>
 
 #define leftBPpin 2
 #define rightBPpin 3
@@ -25,13 +26,19 @@ void loop() {
   String state, prevState;
   long duration;
   bool adminMode;
+  bool HIDmode;
 
   prevState = "HH";
   lcounter = 0;
   rcounter = 0;
   adminMode = false;
-  duration = 1000;
-
+  duration = 500 * EEPROM.read(0);
+  if (duration == 0 or duration > 10000)
+  {
+    duration = 1000;
+  }
+  Serial.print("> Duration=" + String(duration)) + Serial.println(); delay(100);
+  
   while (1)
   {
     // read both button state from digital inputs
@@ -59,23 +66,31 @@ void loop() {
       startRight = millis();
       digitalWrite(LED, HIGH);
 
-      if (adminMode) 
+      if (adminMode)
       {
+        Serial.print("+++"); delay(500);
+        Serial.print("AT+SETTING=DEFPERIPHERAL") + Serial.println(); delay(100);
         Serial.print("AT+ROLE=ROLE_PERIPHERAL") + Serial.println(); delay(100);
-        Serial.print("AT+FSM=FSM_HID_USB_COM_BLE_AT") + Serial.println(); delay(100);      
-        // blinkLED(250, 4);
+        Serial.print("AT+FSM=FSM_HID_USB_COM_BLE_AT") + Serial.println(); delay(100);
+        blinkLED(250, 4);
+        HIDmode = true;
+        Serial.print("AT+RESTART") + Serial.println(); delay(100);
+
       }
     }
 
     if (prevState == "HH" and state == "LH") // left button is pressed
     {
-      startRight = millis();
+      startLeft = millis();
       digitalWrite(LED, HIGH);
       if (adminMode)
       {
         Serial.print("AT+ROLE=ROLE_CENTRAL") + Serial.println(); delay(100);
         Serial.print("AT+FSM=FSM_TRANS_USB_COM_BLE") + Serial.println(); delay(100);
-        // blinkLED(500, 2);        
+        blinkLED(500, 2);
+        HIDmode = false;
+        Serial.print("AT+RESTART") + Serial.println(); delay(100);
+
       }
     }
 
@@ -89,12 +104,17 @@ void loop() {
       } else if (lcounter > 0) // manage long press parameter
       {
         duration = lcounter * durationStep;
+        EEPROM.write(0, lcounter);
+        Serial.print(">Duration=" + String(duration)) + Serial.println(); delay(100);
         lcounter = 0;
-      } else if (endRight - startRight > duration) // long press > duration ms will send the 'c' character
-      {
-        BLE.press_key(HID_KEYBOARD_C); delay(100);
-        BLE.press_key(HID_KEYBOARD_RESERVED); delay(10);
-      } else // right button short press - send a right cursor code
+      }
+      /*
+            else if (endRight - startRight > duration) // long press > duration ms
+            {
+              // do something later
+            }
+      */
+      else // right button short press - send a right cursor code
       {
         digitalWrite(LED, LOW);
         BLE.press_key(HID_KEYBOARD_RIGHT_ARROW); delay(100); // short press sends a right cursor code
@@ -113,9 +133,11 @@ void loop() {
       {
         adminMode = true;
         rcounter = 0;
-      } else if (endRight - startRight > duration) // long press > duration ms  - nothing for now
+      } else if (endLeft - startLeft > duration) // long press > duration ms - send the 'c' character
       {
-        // do something later
+        BLE.press_key(HID_KEYBOARD_C); delay(100);
+        BLE.press_key(HID_KEYBOARD_RESERVED); delay(10);
+
       } else // left button short press - send a left cursor code
       {
         digitalWrite(LED, LOW);
@@ -145,7 +167,7 @@ void loop() {
 void blinkLED(int period, int nr)
 {
   int i;
-  for (i = 1; i <= nr; 1)
+  for (i = 1; i <= nr; i++)
   {
     digitalWrite(LED, HIGH);
     delay(period);
